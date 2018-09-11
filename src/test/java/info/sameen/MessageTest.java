@@ -20,7 +20,7 @@ public class MessageTest {
     }
 
     @Test
-    public void testSendMessage() {
+    public void testCreatePost() {
 
     }
 
