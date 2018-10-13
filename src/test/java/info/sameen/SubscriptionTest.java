@@ -31,7 +31,16 @@ public class SubscriptionTest {
     public void testFollow() {
         User charlie = new User("Charlie");
         charlie.follow(alice);
+
         assertEquals(true, charlie.isFollowing(alice));
+    }
+
+    @Test
+    public void testFollowOtherDirection() {
+        User charlie = new User("Charlie");
+        charlie.follow(alice);
+
+        assertEquals(false, alice.isFollowing(charlie));
     }
 
 }

@@ -58,4 +58,22 @@ public class TimelineTest {
         assertEquals("Damn! We lost!", bob.getTimeline().get(bob.getLastPostIndex()-1).getBody());
     }
 
+    @Test
+    public void testTimelineSize() {
+        bob.post("Damn! We lost!");
+        bob.post("Good game though.");
+
+        assertEquals(2, bob.getTimeline().size());
+    }
+
+    @Test
+    public void testAggregateSubscriptionTimelineSize() {
+        alice.post("I love the weather today");
+        User charlie = new User("Charlie");
+        charlie.post("I'm in New York today! Anyone want to have a coffee?");
+        charlie.follow(alice);
+
+        assertEquals(2, charlie.wall().size());
+    }
+
 }
