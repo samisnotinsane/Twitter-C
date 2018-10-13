@@ -11,31 +11,51 @@ import static org.junit.Assert.assertEquals;
  */
 public class TimelineTest {
 
+    User alice;
+    User bob;
+
     @Before
     public void setUp() {
-
+        alice = new User("Alice");
+        bob = new User("Bob");
     }
 
     @After
     public void tearDown() {
-
+        alice = null;
+        bob = null;
     }
 
     @Test
-    public void testPosting() {
-        User alice = User.get("alice");
-        Timeline aliceTimeline = alice.timeline();
-        aliceTimeline.post(Message.createMessage("I love the weather today"));
+    public void testSinglePostToTimeline() {
+        alice.post("I love the weather today");
+        Post aliceLastPost = alice.getLastPost();
 
-        assertEquals("I love the weather today", aliceTimeline.lastMessage());
+        assertEquals("I love the weather today", aliceLastPost.getBody());
     }
 
     @Test
-    public void testReading() {
-        User alice = User.get("alice");
-        Timeline aliceTimeline = alice.timeline();
+    public void testMultipleUsersPostToTimeline() {
+        alice.post("I love the weather today");
+        bob.post("Damn! We lost!");
 
-        assertEquals("I love the weatehr today (5 mins ago)", aliceTimeline.lastMessage());
+        assertEquals("Damn! We lost!", bob.getLastPost().getBody());
+    }
+
+    @Test
+    public void testLastPostFromTimeline() {
+        bob.post("Damn! We lost!");
+        bob.post("Good game though.");
+
+        assertEquals("Good game though.", bob.getLastPost().getBody());
+    }
+
+    @Test
+    public void testGetOlderPostFromTimeline() {
+        bob.post("Damn! We lost!");
+        bob.post("Good game though.");
+
+        assertEquals("Damn! We lost!", bob.getTimeline().get(bob.getLastPostIndex()-1).getBody());
     }
 
 }

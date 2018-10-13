@@ -12,22 +12,26 @@ import static org.junit.Assert.assertEquals;
  */
 public class SubscriptionTest {
 
+    User alice;
+    User bob;
+
     @Before
     public void setUp() {
-
+        alice = new User("Alice");
+        bob = new User("Bob");
     }
 
     @After
     public void tearDown() {
-
+        alice = null;
+        bob = null;
     }
 
     @Test
     public void testFollow() {
-        User charlie = User.get("charlie");
-        charlie.follow(User.get("alice"));
-
-        assertEquals(true, charlie.isFollowing(User.get("alice")));
+        User charlie = new User("Charlie");
+        charlie.follow(alice);
+        assertEquals(true, charlie.isFollowing(alice));
     }
 
 }

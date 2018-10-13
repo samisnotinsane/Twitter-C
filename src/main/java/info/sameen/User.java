@@ -1,48 +1,61 @@
 package info.sameen;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sameen on 11/09/2018.
  */
 public class User {
 
-    /**
-     * Returns a <code>User</code> if it exists,
-     * <code>null</code> otherwise.
-     *
-     * @param username
-     * @return
-     */
-    public static User get(String username) {
-        return null;
+    private String name;
+    private List<User> following;
+    private List<Post> timeline;
+    private int lastPostIndex;
+
+    public User(String name) {
+        this.name = name;
+        this.following = new ArrayList<>();
+        this.timeline = new ArrayList<>();
+        this.lastPostIndex = -1;
     }
 
-    /**
-     * Returns the <code>Timeline</code> of this <code>User</code>.
-     *
-     * @return
-     */
-    public Timeline timeline() {
-        return null;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * Subscribes this <code>User</code> to the given
-     * <code>User</code>.
-     *
-     * @param toFollow the <code>User</code> which should be followed
-     */
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public List<Post> getTimeline() {
+        return timeline;
+    }
+
+    public int getLastPostIndex() {
+        return lastPostIndex;
+    }
+
+    public void post(String body) {
+        Post p = new Post(this, body);
+        timeline.add(p);
+        lastPostIndex++;
+    }
+
+    public Post getLastPost() {
+        return this.timeline.get(this.lastPostIndex);
+    }
+
     public void follow(User toFollow) {
-
+        this.following.add(toFollow);
     }
 
-    /**
-     * Checks that the given <code>User</code> is being followed by
-     * this <code>User</code>.
-     *
-     * @param user
-     * @return <code>true</code> if subscribed to given user
-     */
     public boolean isFollowing(User user) {
+        for (User connection : this.following) {
+            if (connection.equals(user)) {
+                return true;
+            }
+        }
         return false;
     }
 }
